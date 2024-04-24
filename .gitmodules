@@ -1,0 +1,3 @@
+[submodule "3D_GOL/packages/libraries/googletest"]
+	path = 3D_GOL/packages/libraries/googletest
+	url = https://github.com/google/googletest.git

@@ -1,0 +1,22 @@
+﻿  Camera.cpp
+  Cell.cpp
+C:\Users\darra\Documents\Code\final-year-project-D4rr4gh1\3D GOL\3D GOL\Cell.cpp(50,30): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  Cube.cpp
+  Grid.cpp
+  main.cpp
+C:\Users\darra\Documents\Code\final-year-project-D4rr4gh1\3D GOL\3D GOL\main.cpp(161,17): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\darra\Documents\Code\final-year-project-D4rr4gh1\3D GOL\3D GOL\main.cpp(162,17): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\darra\Documents\Code\final-year-project-D4rr4gh1\3D GOL\3D GOL\main.cpp(166,19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\darra\Documents\Code\final-year-project-D4rr4gh1\3D GOL\3D GOL\main.cpp(167,19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\darra\Documents\Code\final-year-project-D4rr4gh1\3D GOL\3D GOL\main.cpp(169,13): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\darra\Documents\Code\final-year-project-D4rr4gh1\3D GOL\3D GOL\main.cpp(170,13): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\darra\Documents\Code\final-year-project-D4rr4gh1\3D GOL\3D GOL\main.cpp(226,21): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\darra\Documents\Code\final-year-project-D4rr4gh1\3D GOL\3D GOL\main.cpp(231,28): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  RPSCell.cpp
+LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
+  Generating code
+  Previous IPDB not found, fall back to full compilation.
+  All 484 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+glew32s.lib(glew.obj) : warning LNK4099: PDB '' was not found with 'glew32s.lib(glew.obj)' or at ''; linking object as if no debug info
+  3D GOL.vcxproj -> C:\Users\darra\Documents\Code\final-year-project-D4rr4gh1\3D GOL\x64\Release\3D GOL.exe

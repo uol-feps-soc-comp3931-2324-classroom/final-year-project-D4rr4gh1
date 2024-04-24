@@ -1,0 +1,6 @@
+﻿  pch.cpp
+  test.cpp
+C:\Users\darra\Documents\Code\final-year-project-D4rr4gh1\3D GOL\3D GOL\Cell.cpp(50,30): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  (compiling source file '/test.cpp')
+  
+  3DCALib_Test.vcxproj -> C:\Users\darra\Documents\Code\final-year-project-D4rr4gh1\3D GOL\x64\Release\3DCALib_Test.exe

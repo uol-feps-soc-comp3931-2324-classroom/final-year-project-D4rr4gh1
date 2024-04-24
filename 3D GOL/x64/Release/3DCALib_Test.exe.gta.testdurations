@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GtaTestDurations xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Executable>C:\Users\darra\Documents\Code\final-year-project-D4rr4gh1\3D GOL\x64\Release\3DCALib_Test.exe</Executable>
+  <TestDurations>
+    <TestDuration Test="CellTest.DefaultState" Duration="1" />
+    <TestDuration Test="CellTest.StateTransition" Duration="1" />
+    <TestDuration Test="RPSCellTest.DefaultState" Duration="1" />
+    <TestDuration Test="RPSCellTest.StateTransition" Duration="1" />
+    <TestDuration Test="RPSCellTest.Update" Duration="1" />
+    <TestDuration Test="RPSCellTest.Update2" Duration="1" />
+    <TestDuration Test="RPSCellTest.Update3" Duration="1" />
+    <TestDuration Test="RPSCellTest.Update4" Duration="1" />
+    <TestDuration Test="GridTest.updateGrid" Duration="1" />
+  </TestDurations>
+</GtaTestDurations>
