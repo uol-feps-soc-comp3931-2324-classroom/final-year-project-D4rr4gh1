@@ -27,7 +27,7 @@ public class App {
         }
 
         // Create our GUI for the application
-        JFrame frame = new JFrame("Game of Life");
+        JFrame frame = new JFrame("Rock Paper Scissors");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(p.width, p.height);
         gamePanel panel = new gamePanel();

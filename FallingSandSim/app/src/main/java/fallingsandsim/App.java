@@ -3,12 +3,168 @@
  */
 package fallingsandsim;
 
+import java.util.Timer;
+import java.util.TimerTask;
+import javax.swing.*;
+import java.awt.*;
+
 public class App {
-    public String getGreeting() {
-        return "Hello World!";
-    }
+
+    private static Population p;
 
     public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+
+        p = new Population(600, 400);
+
+        // Create our GUI for the application
+        JFrame frame = new JFrame("Falling Sand Simulation");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(p.width, p.height);
+
+        JButton waterButton = new JButton("Water");
+        JButton sandButton = new JButton("Sand");
+        JButton stoneButton = new JButton("Stone");
+        
+        gamePanel panel = new gamePanel();
+        panel.setLayout(new BorderLayout());
+
+        waterButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                panel.setDrawState(State.WATER);
+            }
+        });
+
+        sandButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                panel.setDrawState(State.SAND);
+            }
+        });
+
+        stoneButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                panel.setDrawState(State.STONE);
+            }
+        });
+
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        buttonPanel.add(waterButton);
+        buttonPanel.add(sandButton);
+        buttonPanel.add(stoneButton);
+
+        frame.setLayout(new BorderLayout());
+        frame.add(buttonPanel, BorderLayout.NORTH);
+        frame.add(panel, BorderLayout.CENTER);
+
+        frame.pack();
+        frame.setVisible(true);
+        // Set up our timer for repeatedly running the evolution function
+        Timer timer = new Timer();
+
+        // The function that will be called continually, it gets the new,
+        // evolved population from the ruleset and sets it to the classes
+        // population member. It then redraws the UI to match the new population.
+        TimerTask doThing = new TimerTask() {
+            @Override
+            public void run() {
+                p = p.evolve();
+                panel.repaint();
+            }  
+        }; 
+
+
+        timer.scheduleAtFixedRate(doThing, 0, 100);
+    }
+
+
+    // This class is implemented to create the panel to be drawn on, this 
+    // requires extending the JPanel class so that the paint method can 
+    // be adjusted to implement our new logic as to what should be drawn.
+    static class gamePanel extends JPanel {
+        private int lastX, lastY;
+        private javax.swing.Timer timer;
+        private State drawState = State.SAND;
+        
+        public gamePanel(){
+            setPreferredSize(new Dimension(p.width, p.height));
+            setBackground(Color.BLACK);
+
+            timer = new javax.swing.Timer(100, new java.awt.event.ActionListener() {
+                @Override
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    handleMouse(lastX, lastY);
+                }
+            });
+
+
+            addMouseListener(new java.awt.event.MouseAdapter() {
+                @Override
+                public void mousePressed(java.awt.event.MouseEvent evt) {
+                    lastX = evt.getX();
+                    lastY = evt.getY();
+                    timer.start();
+                }
+
+                @Override
+                public void mouseReleased(java.awt.event.MouseEvent evt) {
+                    timer.stop();
+                }
+
+                @Override
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    handleMouse(evt.getX(), evt.getY());
+                }
+            });
+
+            addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+                @Override
+                public void mouseDragged(java.awt.event.MouseEvent evt) {
+                    handleMouse(evt.getX(), evt.getY());
+                }
+            });
+        }
+
+        public void handleMouse(int x, int y){
+            if(p.getCell(x, y).state == State.EMPTY){
+                p.setCell(x, y, new Cell(drawState));
+            }
+        }
+
+        public void setDrawState(State state){
+            drawState = state;
+        }
+    
+        @Override
+        public void paint(Graphics g){
+            super.paint(g);
+            int color;
+
+            for (int x = 0; x < p.width; x++) {
+                for (int y = 0; y < p.height; y++) {
+
+                    switch(p.getCell(x, y).state){
+                        case State.SAND:
+                            g.setColor(Color.YELLOW);
+                            g.drawLine(x, y, x, y);
+                            break;
+                        case State.STONE:
+                            g.setColor(Color.GRAY);
+                            g.drawLine(x, y, x, y);
+                            break;
+                        case State.WATER:
+                            g.setColor(Color.BLUE);
+                            g.drawLine(x, y, x, y);
+                            break;
+                        case State.EMPTY:
+                            g.setColor(Color.BLACK);
+                            g.drawLine(x, y, x, y);
+                            break;
+                    }
+                }
+            }
+        }
     }
 }
