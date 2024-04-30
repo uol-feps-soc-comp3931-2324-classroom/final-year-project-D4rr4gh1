@@ -98,10 +98,11 @@ public class Population {
         for(int i = -1; i <= 1; i++){
             for(int j = -1; j <= 1; j++){
                 if(i == 0 && j == 0) continue;
-                if(x + i < 0 || x + i >= width) continue;
-                if(y + j < 0 || y + j >= height) continue;
+                
+                int col = (x + i + width) % width;
+                int row = (y + j + height) % height;
 
-                int opponentState = getCell(x + i, y + j).state;
+                int opponentState = cells[col][row].state;
 
                 // Rules for Regular RPS
                 // if((curCellState == 0 && opponentState == 1) ||
