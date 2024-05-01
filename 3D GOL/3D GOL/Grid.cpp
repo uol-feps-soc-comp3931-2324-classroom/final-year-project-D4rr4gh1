@@ -45,10 +45,11 @@ int Grid<Cell>::getAliveNeighbors(int x, int y, int z) {
 				if (i == 0 && j == 0 && k == 0) {
 					continue;
 				}
-				if (x + i < 0 || x + i >= sizeX || y + j < 0 || y + j >= sizeY || z + k < 0 || z + k >= sizeZ) {
-					continue;
-				}
-				if (cells[x + i][y + j][z + k].getState() == ALIVE) {
+				int col = (x + i + sizeX) % sizeX;
+				int row = (y + j + sizeY) % sizeY;
+				int dep = (z + k + sizeZ) % sizeZ;
+
+				if (cells[col][row][dep].getState() == ALIVE) {
 					aliveNeighbors++;
 				}
 			}
@@ -77,14 +78,16 @@ RPSState Grid<RPSCell>::playRPS(RPSState currentState, int x, int y, int z) {
 		for (int j = -1; j <= 1; ++j) {
 			for (int k = -1; k <= 1; ++k) {
 				if (i == 0 && j == 0 && k == 0) continue;
-				int nx = x + i, ny = y + j, nz = z + k;
-				if (nx >= 0 && nx < sizeX && ny >= 0 && ny < sizeY && nz >= 0 && nz < sizeZ) {
+				
+				int col = (x + i + sizeX) % sizeX;
+				int row = (y + j + sizeY) % sizeY;
+				int dep = (z + k + sizeZ) % sizeZ;
 
-					if (currentState == ROCK && cells[nx][ny][nz].getState() == PAPER) losses++;
-					else if (currentState == PAPER && cells[nx][ny][nz].getState() == SCISSORS) losses++;
-					else if (currentState == SCISSORS && cells[nx][ny][nz].getState() == ROCK) losses++;
+				if (currentState == ROCK && cells[col][row][dep].getState() == PAPER) losses++;
+				else if (currentState == PAPER && cells[col][row][dep].getState() == SCISSORS) losses++;
+				else if (currentState == SCISSORS && cells[col][row][dep].getState() == ROCK) losses++;
 
-				}
+				
 			}
 		}
 	}

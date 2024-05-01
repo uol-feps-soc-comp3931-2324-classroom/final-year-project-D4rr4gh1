@@ -19,7 +19,7 @@ const int sizeX = 50, sizeY = 50, sizeZ = 50;
 float deltaTime;
 const Cell cell;
 const RPSCell RPScell;
-int method = 0; // 1 for Game of Life, 2 for Rock-Paper-Scissors
+int method = 1; // 1 for Game of Life, 2 for Rock-Paper-Scissors
 int renderStartPoint = sizeZ;
 unsigned int VBO, VAO;
 
