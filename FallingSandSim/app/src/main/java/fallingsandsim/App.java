@@ -146,19 +146,19 @@ public class App {
                 for (int y = 0; y < p.height; y++) {
 
                     switch(p.getCell(x, y).state){
-                        case State.SAND:
+                        case SAND:
                             g.setColor(Color.YELLOW);
                             g.drawLine(x, y, x, y);
                             break;
-                        case State.STONE:
+                        case STONE:
                             g.setColor(Color.GRAY);
                             g.drawLine(x, y, x, y);
                             break;
-                        case State.WATER:
+                        case WATER:
                             g.setColor(Color.BLUE);
                             g.drawLine(x, y, x, y);
                             break;
-                        case State.EMPTY:
+                        case EMPTY:
                             g.setColor(Color.BLACK);
                             g.drawLine(x, y, x, y);
                             break;
