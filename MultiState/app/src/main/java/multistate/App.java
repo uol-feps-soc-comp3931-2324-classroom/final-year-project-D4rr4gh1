@@ -89,14 +89,14 @@ public class App {
                             break;
 
                         // RPSLSp Extra Colours
-                        // case 3:
-                        //     g.setColor(Color.ORANGE);
-                        //     g.drawLine(x, y, x, y);
-                        //     break;
-                        // case 4:
-                        //     g.setColor(Color.BLACK);
-                        //     g.drawLine(x, y, x, y);
-                        //     break;
+                        case 3:
+                            g.setColor(Color.ORANGE);
+                            g.drawLine(x, y, x, y);
+                            break;
+                        case 4:
+                            g.setColor(Color.BLACK);
+                            g.drawLine(x, y, x, y);
+                            break;
                     }
                 }
             }

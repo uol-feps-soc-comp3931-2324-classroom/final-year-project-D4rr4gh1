@@ -49,13 +49,12 @@ public class Population {
             for (int i = 0; i < width; i++) {
                 for (int j = 0; j < height; j++) {
                     if (j < height * i / width) {
-                        // Upper-left triangle
                         cells[i][j] = new Cell(0);
                     } else if (j > height - (height * i / width)) {
-                        // Lower-right triangle
+                        // Middle triangle
                         cells[i][j] = new Cell(1);
                     } else {
-                        // Middle triangle
+                        // Left triangle
                         cells[i][j] = new Cell(2);
                     }
                 }
@@ -98,9 +97,10 @@ public class Population {
         for(int i = -1; i <= 1; i++){
             for(int j = -1; j <= 1; j++){
                 if(i == 0 && j == 0) continue;
-                
-                int col = (x + i + width) % width;
-                int row = (y + j + height) % height;
+                if(x + i < 0 || x + i >= width || y + j < 0 || y + j >= height) continue;
+
+                int col = (x + i);
+                int row = (y + j);
 
                 int opponentState = cells[col][row].state;
 
