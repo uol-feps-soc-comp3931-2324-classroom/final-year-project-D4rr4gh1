@@ -18,8 +18,8 @@ public:
 
     bool moveForward, moveBackward, moveLeft, moveRight, speedUp, slowDown = false;
 
-    Camera(glm::vec3 position = glm::vec3(0.0f, 0.0f, 100.0f), glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f), float yaw = -90.0f, float pitch = 0.0f)
-        : Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(2.5f), MouseSensitivity(0.1f), fov(45.0f) {
+    Camera(glm::vec3 position = glm::vec3(0.0f, 0.0f, 60.0f), glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f), float yaw = -90.0f, float pitch = 0.0f)
+        : Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(2.5f), MouseSensitivity(0.1f), fov(90.0f) {
         Position = position;
         WorldUp = up;
         Yaw = yaw;

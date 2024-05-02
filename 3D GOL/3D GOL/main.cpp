@@ -12,6 +12,7 @@
 #include "Cube.h"
 #include "Shader.h"
 #include "Grid.h"
+#include "Global.h"
 
 const unsigned int WIDTH = 800;
 const unsigned int HEIGHT = 600;
@@ -19,9 +20,18 @@ const int sizeX = 50, sizeY = 50, sizeZ = 50;
 float deltaTime;
 const Cell cell;
 const RPSCell RPScell;
-int method = 1; // 1 for Game of Life, 2 for Rock-Paper-Scissors
 int renderStartPoint = sizeZ;
 unsigned int VBO, VAO;
+bool paused = false;
+
+
+// Game Variables
+int generalORrps = 1; // 1 for General Ruleset, 2 for Rock-Paper-Scissors
+int SurvivalThreshold = 4; // Number of neighbors required for a cell to survive
+int BirthThreshold = 4; // Number of neighbors required for a cell to be born
+int defaultLifeSpan = 5; // Lifespan of a cell
+
+
 
 Grid<Cell> grid(sizeX, sizeY, sizeZ);
 Grid<RPSCell> RPSgrid(sizeX, sizeY, sizeZ);
@@ -47,7 +57,7 @@ void render() {
     glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
     glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
 
-    if (method == 1) {
+    if (generalORrps == 1) {
 
         // Draw the filled cubes first
         for (int x = 0; x < sizeX; x++) {
@@ -79,22 +89,22 @@ void render() {
     }
 
     // Render wireframe borders
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-    glLineWidth(2.0f);  // Adjust line width as necessary
-    for (int x = 0; x < sizeX; x++) {
-        for (int y = 0; y < sizeY; y++) {
-            for (int z = 0; z < sizeZ; z++) {
-                if (grid.cells[x][y][z].getState() == ALIVE) {
-                    glm::vec3 pos(x - sizeX / 2, y - sizeY / 2, z - sizeZ / 2);
-                    model = glm::translate(glm::mat4(1.0f), pos);
-                    glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-                    glUniform3f(colorLoc, 0.0f, 0.0f, 0.0f);  // Black color for wireframe
-                    glDrawArrays(GL_TRIANGLES, 0, 36);
-                }
-            }
-        }
-    }
-    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);  // Restore to default
+    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    //glLineWidth(2.0f);  // Adjust line width as necessary
+    //for (int x = 0; x < sizeX; x++) {
+    //    for (int y = 0; y < sizeY; y++) {
+    //        for (int z = 0; z < sizeZ; z++) {
+    //            if (grid.cells[x][y][z].getState() == ALIVE) {
+    //                glm::vec3 pos(x - sizeX / 2, y - sizeY / 2, z - sizeZ / 2);
+    //                model = glm::translate(glm::mat4(1.0f), pos);
+    //                glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+    //                glUniform3f(colorLoc, 0.0f, 0.0f, 0.0f);  // Black color for wireframe
+    //                glDrawArrays(GL_TRIANGLES, 0, 36);
+    //            }
+    //        }
+    //    }
+    //}
+    //glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);  // Restore to default
     glBindVertexArray(0);
 }
 
@@ -149,6 +159,11 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
     {
         if(action == GLFW_PRESS)
             renderStartPoint = renderStartPoint == sizeZ ? sizeZ / 2 : sizeZ;
+    }
+    else if (key == GLFW_KEY_SPACE) {
+        if (action == GLFW_PRESS)
+            paused = paused == true ? false : true;
+
     }
 }
 
@@ -219,7 +234,7 @@ int main() {
     glUseProgram(shaderProgram);
 
 
-    method == 1 ? grid.initializeGrid() : RPSgrid.initializeGrid();
+    generalORrps == 1 ? grid.initializeGrid() : RPSgrid.initializeGrid();
     setupCubeVAO();
 
     deltaTime = 0.0f;
@@ -234,8 +249,9 @@ int main() {
 
         camera.ProcessKeyboard(window, deltaTime);
 
-        if (currentFrame - timer >= 0.1f) {
-			method == 1 ? grid.updateGrid() : RPSgrid.updateGrid();
+        if (currentFrame - timer >= 0.5f) {
+            if(!paused)
+                generalORrps == 1 ? grid.updateGrid() : RPSgrid.updateGrid();
 			timer = currentFrame;
 		}
         render();

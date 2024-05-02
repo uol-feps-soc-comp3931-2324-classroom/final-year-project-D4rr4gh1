@@ -17,7 +17,7 @@ const char* fragmentShaderSource = R"glsl(
 out vec4 FragColor;
 uniform vec3 objectColor; // Added uniform for color
 void main() {
-    FragColor = vec4(objectColor, 0.5);
+    FragColor = vec4(objectColor, 0.1);
 }
 )glsl";
 

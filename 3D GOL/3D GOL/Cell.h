@@ -1,6 +1,7 @@
 #ifndef CELL_H
 #define CELL_H
 #include <glm/glm.hpp>
+#include "Global.h"
 
 enum State { DEAD, ALIVE };
 
@@ -14,8 +15,8 @@ private:
 
 	public:
 		Cell() : currentState(DEAD), lifespan(0), isDying(false), color(glm::vec3(1.0, 0.0, 0.0)) {}
-		Cell(State state, int setLife = 0, bool deathStatus = false) :
-			currentState(state), lifespan(setLife), isDying(deathStatus), color(glm::vec3(1.0, 0.0, 0.0)) {}
+		Cell(State state, bool deathStatus = false) :
+			currentState(state), lifespan(defaultLifeSpan), isDying(deathStatus), color(glm::vec3(1.0, 0.0, 0.0)) {}
 		State getState();
 		void setState(State state);
 		int getLifespan();
@@ -23,8 +24,7 @@ private:
 		bool getIsDying();
 		void setIsDying(bool isDying);
 		glm::vec3 getColor();
-		void updateCell(int neighbours);
-		void copy(Cell cell);
+		void setCellColor(glm::vec3 color);
 
 
 };

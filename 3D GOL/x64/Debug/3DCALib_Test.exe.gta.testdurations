@@ -12,5 +12,7 @@
     <TestDuration Test="RPSCellTest.Update4" Duration="1" />
     <TestDuration Test="GridTest.updateGrid" Duration="1" />
     <TestDuration Test="GridTest.updateGrid2" Duration="1" />
+    <TestDuration Test="GridTest.NeighbourCountTest" Duration="1" />
+    <TestDuration Test="GridTest.NeighbourCount2" Duration="1" />
   </TestDurations>
 </GtaTestDurations>

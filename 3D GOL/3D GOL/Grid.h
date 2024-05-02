@@ -24,6 +24,8 @@ public:
 
 	void updateGrid();
 
+	Cell newCell(Cell currentCell, int neighbours);
+
 	int getAliveNeighbors(int x, int y, int z);
 
 

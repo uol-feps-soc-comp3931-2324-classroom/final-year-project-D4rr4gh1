@@ -5,11 +5,14 @@
 #include "../3D GOL/Cell.cpp"
 #include "../3D GOL/RPSCell.cpp"
 #include "../3D GOL/Grid.cpp"
+#include "../3D GOL/Global.h"
 #include <gtest/gtest.h>
 
-
-Cell cell(ALIVE, 5, false);
-Cell cell2(DEAD, 0, false);
+int defaultLifeSpan = 5;
+int SurvivalThreshold = 4;
+int BirthThreshold = 4;
+Cell cell(ALIVE, false);
+Cell cell2(DEAD, false);
 
 RPSCell rockCell(ROCK);
 RPSCell paperCell(PAPER);
@@ -73,60 +76,56 @@ TEST(RPSCellTest, Update4) {
 	EXPECT_EQ(rpsCell.getState(), ROCK);
 }
 
-TEST(GridTest, updateGrid) {
+TEST(GridTest, NeighbourCountTest) {
+	// Check if the number of alive neighbours is correct
+	Grid<Cell> largeGrid(10, 10, 10);
+	largeGrid.cells[0][0][0].setState(ALIVE);
+	largeGrid.cells[0][0][1].setState(ALIVE);
+	largeGrid.cells[0][1][0].setState(ALIVE);
+	largeGrid.cells[0][1][1].setState(ALIVE);
+	largeGrid.cells[1][0][0].setState(ALIVE);
+	largeGrid.cells[1][0][1].setState(ALIVE);
+	largeGrid.cells[1][1][0].setState(ALIVE);
+	largeGrid.cells[1][1][1].setState(ALIVE);
 
-	for (int i = 0; i < 3; i++) {
-		for (int j = 0; j < 3; j++) {
-			for (int k = 0; k < 3; k++) {
-				grid.cells[i][j][k].copy(cell2);
-			}
-		}
-	}
-	grid.updateGrid();
+	
 
-	std::cout << "Updated grid: \n";
-	grid.cells[1][1][1].copy(cell);
-	grid.cells[0][2][0].copy(cell);
-	grid.cells[1][2][0].copy(cell);
-	grid.cells[1][2][1].copy(cell);
-	grid.cells[2][2][0].copy(cell);
-
-	grid.updateGrid();
-
-	EXPECT_EQ(grid.cells[1][1][1].getState(), ALIVE);
-	EXPECT_FALSE(grid.cells[1][1][1].getIsDying());
-	EXPECT_TRUE(grid.cells[0][2][0].getIsDying());
-	EXPECT_TRUE(grid.cells[1][2][0].getIsDying());
-	EXPECT_TRUE(grid.cells[1][2][1].getIsDying());
-	EXPECT_TRUE(grid.cells[2][2][0].getIsDying());
+	EXPECT_EQ(largeGrid.getAliveNeighbors(0, 0, 0), 7);
+	EXPECT_EQ(largeGrid.getAliveNeighbors(1, 1, 1), 7);
+	EXPECT_EQ(largeGrid.getAliveNeighbors(0, 0, 1), 7);
+	EXPECT_EQ(largeGrid.getAliveNeighbors(7, 10, 3), 0);
 
 }
 
-TEST(GridTest, updateGrid2) {
+TEST(GridTest, NeighbourCount2) {
+	Grid<Cell> largeGrid(10, 10, 10);
+	largeGrid.cells[0][0][0].setState(ALIVE);
+	largeGrid.cells[1][0][0].setState(ALIVE);
+	largeGrid.cells[0][1][0].setState(ALIVE);
+	largeGrid.cells[1][1][0].setState(ALIVE);
 
-	for (int i = 0; i < 3; i++) {
-		for (int j = 0; j < 3; j++) {
-			for (int k = 0; k < 3; k++) {
-				grid.cells[i][j][k].copy(cell2);
-			}
-		}
-	}
-	grid.updateGrid();
+	EXPECT_EQ(largeGrid.getAliveNeighbors(0, 0, 1), 4);
+	EXPECT_EQ(largeGrid.cells[0][0][0].getIsDying(), false);
 
-	std::cout << "Updated grid: \n";
-	grid.cells[1][1][1].copy(cell);
-	grid.cells[0][2][0].copy(cell);
-	grid.cells[1][2][0].copy(cell);
-	grid.cells[1][2][1].copy(cell);
-	grid.cells[2][2][0].copy(cell);
+	largeGrid.updateGrid();
 
-	grid.updateGrid();
+	EXPECT_TRUE(largeGrid.cells[0][0][0].getIsDying());
+	EXPECT_EQ(largeGrid.cells[0][0][1].getState(), ALIVE);
 
-	EXPECT_EQ(grid.cells[1][1][1].getState(), ALIVE);
-	EXPECT_FALSE(grid.cells[1][1][1].getIsDying());
-	EXPECT_TRUE(grid.cells[0][2][0].getIsDying());
-	EXPECT_TRUE(grid.cells[1][2][0].getIsDying());
-	EXPECT_TRUE(grid.cells[1][2][1].getIsDying());
-	EXPECT_TRUE(grid.cells[2][2][0].getIsDying());
+}
+
+TEST(GridTest, LifeSpanTest) {
+	Grid<Cell> largeGrid(10, 10, 10);
+	largeGrid.cells[0][0][0].setState(ALIVE);
+	largeGrid.cells[1][0][0].setState(ALIVE);
+	largeGrid.cells[0][1][0].setState(ALIVE);
+	largeGrid.cells[1][1][0].setState(ALIVE);
+
+	largeGrid.updateGrid();
+
+	EXPECT_TRUE(largeGrid.cells[0][0][0].getIsDying());
+	EXPECT_EQ(largeGrid.cells[0][0][0].getLifespan(), 4);
+	EXPECT_EQ(largeGrid.cells[0][0][1].getState(), ALIVE);
+	EXPECT_EQ(largeGrid.cells[0][0][1].getLifespan(), 5);
 
 }	
