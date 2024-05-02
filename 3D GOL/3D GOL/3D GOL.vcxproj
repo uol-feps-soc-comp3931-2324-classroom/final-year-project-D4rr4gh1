@@ -71,11 +71,11 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>..\packages\libraries\glm-master;..\packages\libraries\glfw-3.4.bin.WIN64\include;..\packages\libraries\glew-2.2.0\include;..\packages\libraries\gladFiles\include;$(IncludePath)</IncludePath>
+    <IncludePath>..\packages\stb;..\packages\libraries\glm-master;..\packages\libraries\glfw-3.4.bin.WIN64\include;..\packages\libraries\glew-2.2.0\include;..\packages\libraries\gladFiles\include;$(IncludePath)</IncludePath>
     <LibraryPath>..\packages\libraries\glew-2.2.0\lib\Release\x64;..\packages\libraries\glfw-3.4.bin.WIN64\lib-vc2022;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>..\packages\libraries\glm-master;..\packages\libraries\glfw-3.4.bin.WIN64\include;..\packages\libraries\glew-2.2.0\include;..\packages\libraries\gladFiles\include;$(IncludePath)</IncludePath>
+    <IncludePath>..\packages\stb;..\packages\libraries\glm-master;..\packages\libraries\glfw-3.4.bin.WIN64\include;..\packages\libraries\glew-2.2.0\include;..\packages\libraries\gladFiles\include;$(IncludePath)</IncludePath>
     <LibraryPath>..\packages\libraries\glew-2.2.0\lib\Release\x64;..\packages\libraries\glfw-3.4.bin.WIN64\lib-vc2022;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

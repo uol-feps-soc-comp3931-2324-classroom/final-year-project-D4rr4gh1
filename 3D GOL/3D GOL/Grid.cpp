@@ -41,16 +41,19 @@ Cell Grid<Cell>::newCell(Cell currentCell, int neighbours) {
 		newCell.setCellColor(glm::vec3(0.0, 0.0, 0.0));
 	}
 	else if (currentState == ALIVE && lifespan == defaultLifeSpan) {
-		if (neighbours != SurvivalThreshold) {
+		if (neighbours < 13 || neighbours > 26) {
 			newCell.setIsDying(true);
 			newCell.setLifespan(lifespan - 1);
 		}
 	}
-	else if (currentState == DEAD && neighbours == BirthThreshold) {
+	else if (currentState == DEAD) {
+		if (neighbours == 13 || neighbours == 14 || neighbours == 17 || neighbours == 18 || neighbours == 19)
+		{
 			newCell.setState(ALIVE);
 			newCell.setIsDying(false);
 			newCell.setCellColor(glm::vec3(1.0, 0.0, 0.0));
 			newCell.setLifespan(defaultLifeSpan);
+		}
 	}
 	
 	if (newCell.getState() == ALIVE && newCell.getIsDying()) {
@@ -89,9 +92,6 @@ int Grid<Cell>::getAliveNeighbors(int x, int y, int z) {
 				int row = (y + j + sizeY) % sizeY;
 				int dep = (z + k + sizeZ) % sizeZ;
 
-				/*int col = x + i;
-				int row = y + j;
-				int dep = z + k;*/
 
 				if (col < 0 || row < 0 || dep < 0 || col >= sizeX || row >= sizeY || dep >= sizeZ) {
 					continue;
@@ -140,7 +140,7 @@ RPSState Grid<RPSCell>::playRPS(RPSState currentState, int x, int y, int z) {
 		}
 	}
 
-	if(losses > (threshold + (rand() % 3))) return static_cast<RPSState>((currentState + 1) % 3);
+	if(losses > (RPSWinThreshold + (rand() % RPSRandomness))) return static_cast<RPSState>((currentState + 1) % 3);
 	return currentState;
 }
 

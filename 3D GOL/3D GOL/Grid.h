@@ -31,7 +31,6 @@ public:
 
 private:
 	int sizeX, sizeY, sizeZ;
-	const int threshold = 10;
 	
 	const T cell;
 

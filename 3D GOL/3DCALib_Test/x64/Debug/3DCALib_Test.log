@@ -1,2 +1,5 @@
-﻿  test.cpp
-  3DCALib_Test.vcxproj -> C:\Users\darra\Documents\Code\final-year-project-D4rr4gh1\3D GOL\x64\Debug\3DCALib_Test.exe
+﻿  pch.cpp
+  test.cpp
+test.obj : error LNK2001: unresolved external symbol "int RPSWinThreshold" (?RPSWinThreshold@@3HA)
+test.obj : error LNK2001: unresolved external symbol "int RPSRandomness" (?RPSRandomness@@3HA)
+C:\Users\darra\Documents\Code\final-year-project-D4rr4gh1\3D GOL\x64\Debug\3DCALib_Test.exe : fatal error LNK1120: 2 unresolved externals

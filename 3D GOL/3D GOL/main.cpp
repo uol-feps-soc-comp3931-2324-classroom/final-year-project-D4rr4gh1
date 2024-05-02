@@ -1,3 +1,6 @@
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#define _CRT_SECURE_NO_WARNINGS
+#include "stb_image_write.h"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
@@ -26,10 +29,15 @@ bool paused = false;
 
 
 // Game Variables
-int generalORrps = 1; // 1 for General Ruleset, 2 for Rock-Paper-Scissors
+int generalORrps = 2; // 1 for General Ruleset, 2 for Rock-Paper-Scissors
 int SurvivalThreshold = 4; // Number of neighbors required for a cell to survive
-int BirthThreshold = 4; // Number of neighbors required for a cell to be born
-int defaultLifeSpan = 5; // Lifespan of a cell
+int BirthThreshold = 3; // Number of neighbors required for a cell to be born
+int defaultLifeSpan = 2; // Lifespan of a cell
+
+
+// RPS Variables
+int RPSWinThreshold = 10;
+int RPSRandomness = 5;
 
 
 
@@ -89,22 +97,22 @@ void render() {
     }
 
     // Render wireframe borders
-    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-    //glLineWidth(2.0f);  // Adjust line width as necessary
-    //for (int x = 0; x < sizeX; x++) {
-    //    for (int y = 0; y < sizeY; y++) {
-    //        for (int z = 0; z < sizeZ; z++) {
-    //            if (grid.cells[x][y][z].getState() == ALIVE) {
-    //                glm::vec3 pos(x - sizeX / 2, y - sizeY / 2, z - sizeZ / 2);
-    //                model = glm::translate(glm::mat4(1.0f), pos);
-    //                glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-    //                glUniform3f(colorLoc, 0.0f, 0.0f, 0.0f);  // Black color for wireframe
-    //                glDrawArrays(GL_TRIANGLES, 0, 36);
-    //            }
-    //        }
-    //    }
-    //}
-    //glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);  // Restore to default
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    glLineWidth(2.0f);  // Adjust line width as necessary
+    for (int x = 0; x < sizeX; x++) {
+        for (int y = 0; y < sizeY; y++) {
+            for (int z = 0; z < sizeZ; z++) {
+                if (grid.cells[x][y][z].getState() == ALIVE) {
+                    glm::vec3 pos(x - sizeX / 2, y - sizeY / 2, z - sizeZ / 2);
+                    model = glm::translate(glm::mat4(1.0f), pos);
+                    glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+                    glUniform3f(colorLoc, 0.0f, 0.0f, 0.0f);  // Black color for wireframe
+                    glDrawArrays(GL_TRIANGLES, 0, 36);
+                }
+            }
+        }
+    }
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);  // Restore to default
     glBindVertexArray(0);
 }
 
@@ -191,6 +199,31 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset) {
     camera.ProcessMouseScroll((float)yoffset);
 }
 
+void captureFrame(int frameNumber) {
+    GLint viewport[4];
+    glGetIntegerv(GL_VIEWPORT, viewport);
+    int width = viewport[2];
+    int height = viewport[3];
+
+    GLubyte* data = new GLubyte[width * height * 3]; // 3 bytes per pixel (RGB)
+
+    glPixelStorei(GL_PACK_ALIGNMENT, 1);
+    glReadPixels(0, 0, width, height, GL_RGB, GL_UNSIGNED_BYTE, data);
+
+    // Flip the image as OpenGL reads pixels from bottom to top
+    GLubyte* flippedData = new GLubyte[width * height * 3];
+    for (int i = 0; i < height; i++) {
+        memcpy(flippedData + (height - 1 - i) * width * 3, data + i * width * 3, width * 3);
+    }
+
+    char filename[1024];
+    sprintf(filename, "frame_%04d.png", frameNumber);
+    stbi_write_png(filename, width, height, 3, flippedData, width * 3);
+
+    delete[] data;
+    delete[] flippedData;
+}
+
 int main() {
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -240,6 +273,7 @@ int main() {
     deltaTime = 0.0f;
     float lastFrame = glfwGetTime();
     float timer = lastFrame;
+    int frameNumber = 0;
 
     while (!glfwWindowShouldClose(window)) {
         glfwPollEvents();
@@ -255,6 +289,7 @@ int main() {
 			timer = currentFrame;
 		}
         render();
+        //captureFrame(frameNumber++);
         glfwSwapBuffers(window);
     }
 
