@@ -33,47 +33,47 @@ public class RPSRules {
         int cellState = cell.state;
 
         //RPS Cell updating
-        if(RPSScore[1] > threshold + randomness){
-            cell.state = (cell.state + 1) % 3;
-        }
+        // if(RPSScore[1] > threshold + randomness){
+        //     cell.state = (cell.state + 1) % 3;
+        // }
         
 
         // RPSLSp Cell Updating
-        // if(RPSScore[1] > threshold + randomness){
-        //     switch(cellState)
-        //     {
-        //         case 0:
-        //             if(RPSScore[0] == 0)
-        //                 cell.state = 1;
-        //             else
-        //                 cell.state = 4;
-        //             break;
-        //         case 1:
-        //             if(RPSScore[0] == 0)
-        //                 cell.state = 2;
-        //             else
-        //                 cell.state = 3;
-        //             break;
-        //         case 2:
-        //             if(RPSScore[0] == 0)
-        //                 cell.state = 0;
-        //             else
-        //                 cell.state = 4;
-        //             break;
-        //         case 3:
-        //             if(RPSScore[0] == 0)
-        //                 cell.state = 0;
-        //             else
-        //                 cell.state = 2;
-        //             break;
-        //         case 4:
-        //             if(RPSScore[0] == 0)
-        //                 cell.state = 1;
-        //             else
-        //                 cell.state = 3;
-        //             break;
-        //     }    
-        //}
+        if(RPSScore[1] > threshold + randomness){
+            switch(cellState)
+            {
+                case 0:
+                    if(RPSScore[0] == 0)
+                        cell.state = 1;
+                    else
+                        cell.state = 4;
+                    break;
+                case 1:
+                    if(RPSScore[0] == 0)
+                        cell.state = 2;
+                    else
+                        cell.state = 3;
+                    break;
+                case 2:
+                    if(RPSScore[0] == 0)
+                        cell.state = 0;
+                    else
+                        cell.state = 4;
+                    break;
+                case 3:
+                    if(RPSScore[0] == 0)
+                        cell.state = 0;
+                    else
+                        cell.state = 2;
+                    break;
+                case 4:
+                    if(RPSScore[0] == 0)
+                        cell.state = 1;
+                    else
+                        cell.state = 3;
+                    break;
+            }    
+        }
 
         return cell;
     }

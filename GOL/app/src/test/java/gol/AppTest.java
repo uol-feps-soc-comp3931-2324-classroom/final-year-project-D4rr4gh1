@@ -13,6 +13,8 @@ class AppTest {
     // }
     
 
+    //Test that initial grtid
+
     //Should oscillate as seen in Conway GOL wiki
     @Test void testOscillator() {
         boolean[][] initial = {{false, false, false, false, false},

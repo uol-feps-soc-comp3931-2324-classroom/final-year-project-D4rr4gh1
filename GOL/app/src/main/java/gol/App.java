@@ -8,10 +8,20 @@ import java.awt.*;
 public class App {
 
     // Create and populate the initial generation
-    private static Population p = new Population(1280, 720);
+    private static Population p;
 
 
     public static void main(String[] args) {
+
+        if(args.length == 1){
+            if(args[0].equals("glidergun")){
+                p = new GliderGun();
+            }
+        }
+        else{
+            p = new Population(1280, 720);
+            p.initCells();
+        }
 
         // Create our GUI for the application
         JFrame frame = new JFrame("Game of Life");
