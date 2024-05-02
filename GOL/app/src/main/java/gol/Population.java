@@ -24,7 +24,7 @@ public class Population {
         // During the initialisation, we will a weighting of 0.2 for our randomness 
         for(int i = 0; i < width; i++) {
             for(int j = 0; j < height; j++) {
-                cells[i][j] = Math.random() < 0.2;
+                cells[i][j] = false;
             }
         }
     }
@@ -36,6 +36,14 @@ public class Population {
         this.width = previouPopulation.width;
         this.height = previouPopulation.height;
         this.cells = new boolean[width][height];
+    }
+
+    public void initCells(){
+        for(int i = 0; i < width; i++) {
+            for(int j = 0; j < height; j++) {
+                cells[i][j] = Math.random() < 0.2;
+            }
+        }
     }
 
     // The following two functions will be used for getting and setting
