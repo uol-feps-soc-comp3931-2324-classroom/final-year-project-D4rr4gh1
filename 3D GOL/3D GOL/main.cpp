@@ -16,6 +16,21 @@
 #include "Shader.h"
 #include "Grid.h"
 #include "Global.h"
+#include "Ruleset.h"
+
+
+// Game Variables
+int generalORrps = 1; // 1 for Chosen Ruleset, 2 for Rock-Paper-Scissors
+int defaultLifeSpan = 5; // Lifespan of a cell
+int initialCellChance = 10; // Initial chance of a cell being alive
+std::vector<int> survivalNeighbours = { 4 }; // Defined number of neighbours for a cell to survive, input each number of desire neighbours into the vector
+std::vector<int> birthNeighbours = { 4 }; // Defined number of neighbours for a cell to be born, input each number of desire neighbours into the vector
+
+// RPS Variables
+int RPSWinThreshold = 10; // Number of wins needed by winning counter part to turn the cell
+int RPSRandomness = 5; // Randomness of the game, the higher the number, the more random the game
+
+
 
 const unsigned int WIDTH = 800;
 const unsigned int HEIGHT = 600;
@@ -27,25 +42,14 @@ int renderStartPoint = sizeZ;
 unsigned int VBO, VAO;
 bool paused = false;
 
+Ruleset ruleset(survivalNeighbours, birthNeighbours);
 
-// Game Variables
-int generalORrps = 2; // 1 for General Ruleset, 2 for Rock-Paper-Scissors
-int SurvivalThreshold = 4; // Number of neighbors required for a cell to survive
-int BirthThreshold = 3; // Number of neighbors required for a cell to be born
-int defaultLifeSpan = 2; // Lifespan of a cell
-
-
-// RPS Variables
-int RPSWinThreshold = 10;
-int RPSRandomness = 5;
-
-
-
-Grid<Cell> grid(sizeX, sizeY, sizeZ);
-Grid<RPSCell> RPSgrid(sizeX, sizeY, sizeZ);
+Grid<Cell> grid(sizeX, sizeY, sizeZ, ruleset);
+Grid<RPSCell> RPSgrid(sizeX, sizeY, sizeZ, ruleset);
 unsigned int shaderProgram;
 
 Camera camera;
+
 
 void render() {
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
@@ -242,7 +246,7 @@ int main() {
     glfwSetScrollCallback(window, &scroll_callback);
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED); // Optionally hide the cursor
 
-    
+
 
     if (glewInit() != GLEW_OK) {
         std::cout << "Failed to initialize GLEW" << std::endl;
@@ -270,6 +274,7 @@ int main() {
     generalORrps == 1 ? grid.initializeGrid() : RPSgrid.initializeGrid();
     setupCubeVAO();
 
+
     deltaTime = 0.0f;
     float lastFrame = glfwGetTime();
     float timer = lastFrame;
@@ -284,10 +289,10 @@ int main() {
         camera.ProcessKeyboard(window, deltaTime);
 
         if (currentFrame - timer >= 0.5f) {
-            if(!paused)
+            if (!paused)
                 generalORrps == 1 ? grid.updateGrid() : RPSgrid.updateGrid();
-			timer = currentFrame;
-		}
+            timer = currentFrame;
+        }
         render();
         //captureFrame(frameNumber++);
         glfwSwapBuffers(window);
@@ -299,5 +304,3 @@ int main() {
     glfwTerminate();
     return 0;
 }
-
- 

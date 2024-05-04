@@ -147,6 +147,7 @@
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="RPSCell.cpp" />
+    <ClCompile Include="Ruleset.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
@@ -155,6 +156,7 @@
     <ClInclude Include="Grid.h" />
     <ClInclude Include="Global.h" />
     <ClInclude Include="RPSCell.h" />
+    <ClInclude Include="Ruleset.h" />
     <ClInclude Include="Shader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

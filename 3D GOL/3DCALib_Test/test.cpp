@@ -6,11 +6,18 @@
 #include "../3D GOL/RPSCell.cpp"
 #include "../3D GOL/Grid.cpp"
 #include "../3D GOL/Global.h"
+#include "../3D GOL/Ruleset.h"
+#include "../3D GOL/Ruleset.cpp"
 #include <gtest/gtest.h>
 
+int initialCellChance = 10;
 int defaultLifeSpan = 5;
-int SurvivalThreshold = 4;
-int BirthThreshold = 4;
+std::vector<int> survivalNeighbours = { 4 };
+std::vector<int> birthNeighbours = { 4 };
+
+int RPSWinThreshold = 10;
+int RPSRandomness = 5; 
+
 Cell cell(ALIVE, false);
 Cell cell2(DEAD, false);
 
@@ -18,9 +25,11 @@ RPSCell rockCell(ROCK);
 RPSCell paperCell(PAPER);
 RPSCell scissorsCell(SCISSORS);
 
+Ruleset ruleset(survivalNeighbours, birthNeighbours);
 
-Grid<Cell> grid(3, 3, 3);
-Grid<RPSCell> rpsGrid(3, 3, 3);
+
+Grid<Cell> grid(3, 3, 3, ruleset);
+Grid<RPSCell> rpsGrid(3, 3, 3, ruleset);
 
 // Test the default state of Cell
 TEST(CellTest, DefaultState) {
@@ -78,7 +87,7 @@ TEST(RPSCellTest, Update4) {
 
 TEST(GridTest, NeighbourCountTest) {
 	// Check if the number of alive neighbours is correct
-	Grid<Cell> largeGrid(10, 10, 10);
+	Grid<Cell> largeGrid(10, 10, 10, ruleset);
 	largeGrid.cells[0][0][0].setState(ALIVE);
 	largeGrid.cells[0][0][1].setState(ALIVE);
 	largeGrid.cells[0][1][0].setState(ALIVE);
@@ -98,7 +107,7 @@ TEST(GridTest, NeighbourCountTest) {
 }
 
 TEST(GridTest, NeighbourCount2) {
-	Grid<Cell> largeGrid(10, 10, 10);
+	Grid<Cell> largeGrid(10, 10, 10, ruleset);
 	largeGrid.cells[0][0][0].setState(ALIVE);
 	largeGrid.cells[1][0][0].setState(ALIVE);
 	largeGrid.cells[0][1][0].setState(ALIVE);
@@ -115,7 +124,7 @@ TEST(GridTest, NeighbourCount2) {
 }
 
 TEST(GridTest, LifeSpanTest) {
-	Grid<Cell> largeGrid(10, 10, 10);
+	Grid<Cell> largeGrid(10, 10, 10, ruleset);
 	largeGrid.cells[0][0][0].setState(ALIVE);
 	largeGrid.cells[1][0][0].setState(ALIVE);
 	largeGrid.cells[0][1][0].setState(ALIVE);

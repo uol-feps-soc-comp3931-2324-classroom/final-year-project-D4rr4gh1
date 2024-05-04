@@ -13,7 +13,7 @@ void Grid<Cell>::updateGrid() {
 				
 				int aliveNeighbors = getAliveNeighbors(i, j, k);
 
-				newGrid[i][j][k] = newCell(cells[i][j][k], aliveNeighbors);
+				newGrid[i][j][k] = rules.newCell(cells[i][j][k], aliveNeighbors);
 			}
 		}
 	}
@@ -22,54 +22,11 @@ void Grid<Cell>::updateGrid() {
 }
 
 template<>
-Cell Grid<Cell>::newCell(Cell currentCell, int neighbours) {
-	Cell newCell;
-
-	State currentState = currentCell.getState();
-	bool isDying = currentCell.getIsDying();
-	int lifespan = currentCell.getLifespan();
-	
-	newCell.setState(currentState);
-	newCell.setLifespan(lifespan);
-	newCell.setIsDying(isDying);
-	newCell.setCellColor(currentCell.getColor());
-
-
-	if (currentState == ALIVE && lifespan == 0) {
-		newCell.setState(DEAD);
-		newCell.setIsDying(true);
-		newCell.setCellColor(glm::vec3(0.0, 0.0, 0.0));
-	}
-	else if (currentState == ALIVE && lifespan == defaultLifeSpan) {
-		if (neighbours < 13 || neighbours > 26) {
-			newCell.setIsDying(true);
-			newCell.setLifespan(lifespan - 1);
-		}
-	}
-	else if (currentState == DEAD) {
-		if (neighbours == 13 || neighbours == 14 || neighbours == 17 || neighbours == 18 || neighbours == 19)
-		{
-			newCell.setState(ALIVE);
-			newCell.setIsDying(false);
-			newCell.setCellColor(glm::vec3(1.0, 0.0, 0.0));
-			newCell.setLifespan(defaultLifeSpan);
-		}
-	}
-	
-	if (newCell.getState() == ALIVE && newCell.getIsDying()) {
-		newCell.setLifespan(lifespan - 1);
-		newCell.setCellColor(glm::vec3(1.0, 1.0 - ((float)newCell.getLifespan() / defaultLifeSpan), 0.0));
-	}
-
-	return newCell;
-}
-
-template<>
 void Grid<Cell>::initializeGrid() {
 	for (int x = 0; x < sizeX; x++) {
 		for (int y = 0; y < sizeY; y++) {
 			for (int z = 0; z < sizeZ; z++) {
-				if ((rand() % 100) < 5) {
+				if ((rand() % 100) < initialCellChance) {
 					cells[x][y][z].setState(ALIVE);
 					cells[x][y][z].setLifespan(defaultLifeSpan);
 				}
