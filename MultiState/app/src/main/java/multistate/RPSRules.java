@@ -27,7 +27,7 @@ public class RPSRules {
         return nextPop;
     }
 
-    public Cell applyRules(Cell cell, int[] RPSScore)
+    private Cell applyRules(Cell cell, int[] RPSScore)
     {   
         int randomness = (int) (Math.random() * randomFactor);
         int cellState = cell.state;
