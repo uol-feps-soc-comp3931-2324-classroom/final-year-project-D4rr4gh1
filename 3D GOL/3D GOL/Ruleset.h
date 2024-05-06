@@ -13,13 +13,13 @@ private:
 public:
 	Ruleset(std::vector<int> survivalNeighbours, std::vector<int> birthNeighbours) {
 		for (int i = 0; i < survivalNeighbours.size(); i++) {
-			if (survivalNeighbours[i] > 26) {
+			if (survivalNeighbours[i] > 26 || survivalNeighbours[i] < 0) {
 				throw std::invalid_argument("Invalid number of neighbours");
 			}
 			survivalRule[survivalNeighbours[i]] = true;
 		}
 		for (int i = 0; i < birthNeighbours.size(); i++) {
-			if (birthNeighbours[i] > 26) {
+			if (birthNeighbours[i] > 26 || birthNeighbours[i] < 0) {
 				throw std::invalid_argument("Invalid number of neighbours");
 			}
 			birthRule[birthNeighbours[i]] = true;
