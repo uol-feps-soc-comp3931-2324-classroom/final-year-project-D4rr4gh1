@@ -7,13 +7,108 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AppTest {
-    // @Test void appHasAGreeting() {
-    //     App classUnderTest = new App();
-    //     assertNotNull(classUnderTest.getGreeting(), "app should have a greeting");
-    // }
-    
 
-    //Test that initial grtid
+    //Test get neighbour function
+    @Test void testGetNeighbours() {
+        boolean[][] initial = {{false, false, false, false, false},
+                                {false, false, false, false, false},
+                                {false, false, true, false, false},
+                                {false, false, false, false, false},
+                                {false, false, false, false, false}};
+        
+        // Create an empty population that we can fill so that we can 
+        // apply our ruleset to it
+        Population testPopulation = new Population(5,5);
+
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                testPopulation.setCell(i, j, initial[i][j]);
+            }
+        }
+
+        assertEquals(testPopulation.getNeighbours(0, 0), 0);
+        assertEquals(testPopulation.getNeighbours(2, 2), 0);
+        assertEquals(testPopulation.getNeighbours(2, 1), 1);
+        assertEquals(testPopulation.getNeighbours(1, 2), 1);
+        
+    }
+        
+    
+    //Test that a cell with fewer than two live neighbours dies
+    @Test void testUnderpopulation() {
+        boolean[][] initial = {{false, false, false, false, false},
+                                {false, false, false, false, false},
+                                {false, false, true, false, false},
+                                {true, false, false, false, false},
+                                {false, false, false, false, true}};
+        
+        boolean[][] result = {{false, false, false, false, false},
+                                {false, false, false, false, false},
+                                {false, false, false, false, false},
+                                {false, false, false, false, false},
+                                {false, false, false, false, false}};
+        
+        
+                        
+        // Create an empty population that we can fill so that we can 
+        // apply our ruleset to it
+        Population testPopulation = new Population(5,5);
+
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                testPopulation.setCell(i, j, initial[i][j]);
+            }
+        }
+
+        testPopulation = ConwayRules.evolve(testPopulation);
+        
+        // Go through the grid and ensure the rules worked correctly by checking
+        // that each of the cells match the result grid.
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                assertEquals(testPopulation.getCell(i, j), result[i][j]);
+            }
+        }
+    }
+
+
+    //Test that a cell with two or three live neighbours lives on to the next generation
+    @Test void testSurvival() {
+        boolean[][] initial = {{false, false, false, false, false},
+                                {false, false, true, false, false},
+                                {false, true, true, true, false},
+                                {false, false, true, false, false},
+                                {false, false, false, false, false}};
+        
+        boolean[][] result = {{false, false, false, false, false},
+                                {false, true, true, true, false},
+                                {false, true, false, true, false},
+                                {false, true, true, true, false},
+                                {false, false, false, false, false}};
+        
+        
+                        
+        // Create an empty population that we can fill so that we can 
+        // apply our ruleset to it
+        Population testPopulation = new Population(5,5);
+
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                testPopulation.setCell(i, j, initial[i][j]);
+            }
+        }
+
+        testPopulation = ConwayRules.evolve(testPopulation);
+        
+        // Go through the grid and ensure the rules worked correctly by checking
+        // that each of the cells match the result grid.
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                System.out.println(i + " " + j);
+                assertEquals(testPopulation.getCell(i, j), result[i][j]);
+            }
+        }
+    }
 
     //Should oscillate as seen in Conway GOL wiki
     @Test void testOscillator() {
@@ -47,12 +142,81 @@ class AppTest {
         // that each of the cells match the result grid.
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
-                System.out.print(testPopulation.getCell(i, j) + " ");
-                System.out.print(result[i][j] + " next ");
                 assertEquals(testPopulation.getCell(i, j), result[i][j]);
             }
-
-            System.out.println();
         }
     }
+
+    @Test void testStillLife() {
+        boolean[][] initial = {{false, false, false, false, false},
+                                {false, false, false, false, false},
+                                {false, false, true, true, false},
+                                {false, false, true, true, false},
+                                {false, false, false, false, false}};
+        
+        boolean[][] result = {{false, false, false, false, false},
+                                {false, false, false, false, false},
+                                {false, false, true, true, false},
+                                {false, false, true, true, false},
+                                {false, false, false, false, false}};
+        
+        
+                        
+        // Create an empty population that we can fill so that we can 
+        // apply our ruleset to it
+        Population testPopulation = new Population(5,5);
+
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                testPopulation.setCell(i, j, initial[i][j]);
+            }
+        }
+
+        testPopulation = ConwayRules.evolve(testPopulation);
+        
+        // Go through the grid and ensure the rules worked correctly by checking
+        // that each of the cells match the result grid.
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                assertEquals(testPopulation.getCell(i, j), result[i][j]);
+            }
+        }
+    }
+
+    @Test void testGlider() {
+        boolean[][] initial = {{false, true, false, false, false},
+                                {false, false, true, false, false},
+                                {true, true, true, false, false},
+                                {false, false, false, false, false},
+                                {false, false, false, false, false}};
+        
+        boolean[][] result = {{false, false, false, false, false},
+                                {true, false, true, false, false},
+                                {false, true, true, false, false},
+                                {false, true, false, false, false},
+                                {false, false, false, false, false}};
+        
+        
+                        
+        // Create an empty population that we can fill so that we can 
+        // apply our ruleset to it
+        Population testPopulation = new Population(5,5);
+
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                testPopulation.setCell(i, j, initial[i][j]);
+            }
+        }
+
+        testPopulation = ConwayRules.evolve(testPopulation);
+        
+        // Go through the grid and ensure the rules worked correctly by checking
+        // that each of the cells match the result grid.
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                assertEquals(testPopulation.getCell(i, j), result[i][j]);
+            }
+        }
+    }
+
 }

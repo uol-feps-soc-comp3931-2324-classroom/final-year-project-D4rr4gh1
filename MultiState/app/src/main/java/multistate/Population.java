@@ -21,23 +21,26 @@ public class Population {
         this.height = height;
         this.cells = new Cell[width][height];
 
-        // During the initialisation, we will get a random number of 0,1 or 2
-        // this will be used to determine whether our cell is rock, paper or scissors
+        initialisePopulation(init);
 
+    }
 
+    // This constructor is called for creating subsequent generations, 
+    // we give it the previous generation and it will set itself up similarly, without
+    // filling the grid
+    public Population(Population previouPopulation){
+        this.width = previouPopulation.width;
+        this.height = previouPopulation.height;
+        this.cells = new Cell[width][height];
+    }
+
+    private void initialisePopulation(int setting){
 
         // This Grid is completely randomised
-        if(init == 0){
+        if(setting == 0){
             for(int i = 0; i < width; i++) {
-                for(int j = 0; j < height; j++) {
-                    //For RPS
-                    //int state = (int) (Math.random() * 100) % 3;
-                    
-
-                    //For RPSLSp
+                for(int j = 0; j < height; j++) {         
                     int state = (int) (Math.random() * 100) % 5;
-
-
                     cells[i][j] = new Cell(state);
                 }
             }
@@ -45,7 +48,7 @@ public class Population {
 
 
         // For RPS, this is split into thirds
-        if(init == 1){
+        if(setting == 1){
             for (int i = 0; i < width; i++) {
                 for (int j = 0; j < height; j++) {
                     if (j < height * i / width) {
@@ -61,15 +64,14 @@ public class Population {
             }
         }
 
-    }
-
-    // This constructor is called for creating subsequent generations, 
-    // we give it the previous generation and it will set itself up similarly, without
-    // filling the grid
-    public Population(Population previouPopulation){
-        this.width = previouPopulation.width;
-        this.height = previouPopulation.height;
-        this.cells = new Cell[width][height];
+        if(setting == 2){
+            for(int i = 0; i < width; i++) {
+                for(int j = 0; j < height; j++) {
+                    int state = (int) (Math.random() * 100) % 3;
+                    cells[i][j] = new Cell(state);
+                }
+            }
+        }
     }
 
     // The following two functions will be used for getting and setting
@@ -103,21 +105,7 @@ public class Population {
                 int row = (y + j);
 
                 int opponentState = cells[col][row].state;
-
-                // Rules for Regular RPS
-                // if((curCellState == 0 && opponentState == 1) ||
-                //       (curCellState == 1 && opponentState == 2) ||
-                //         (curCellState == 2 && opponentState == 0)) 
-                //         {
-                //             WLCount[1]++;
-                //         }
-                // else
-                // {
-                //     WLCount[0]++;
-                // }
-
                 
-
                 // Rules for RPSLSp
                 switch(curCellState)
                 {
