@@ -10,6 +10,8 @@
 #include "../3D GOL/Ruleset.cpp"
 #include <gtest/gtest.h>
 
+
+// Define variables for testing
 int initialCellChance = 10;
 int defaultLifeSpan = 5;
 std::vector<int> survivalNeighbours = { 4 };
@@ -18,6 +20,7 @@ std::vector<int> birthNeighbours = { 4 };
 int RPSWinThreshold = 10;
 int RPSRandomness = 5; 
 
+// Create instances of Cell and RPSCell for testing
 Cell cell(ALIVE, false);
 Cell cell2(DEAD, false);
 
@@ -25,9 +28,10 @@ RPSCell rockCell(ROCK);
 RPSCell paperCell(PAPER);
 RPSCell scissorsCell(SCISSORS);
 
+// Create an instance of Ruleset for testing
 Ruleset ruleset(survivalNeighbours, birthNeighbours);
 
-
+// Create instances of Grid for testing
 Grid<Cell> grid(3, 3, 3, ruleset);
 Grid<RPSCell> rpsGrid(3, 3, 3, ruleset);
 
@@ -85,6 +89,7 @@ TEST(RPSCellTest, Update4) {
 	EXPECT_EQ(rpsCell.getState(), ROCK);
 }
 
+// Test RPSCell update and neighbour counting function
 TEST(GridTest, NeighbourCountTest) {
 	// Check if the number of alive neighbours is correct
 	Grid<Cell> largeGrid(10, 10, 10, ruleset);
@@ -106,6 +111,7 @@ TEST(GridTest, NeighbourCountTest) {
 
 }
 
+// Test the update function of the grid
 TEST(GridTest, NeighbourCount2) {
 	Grid<Cell> largeGrid(10, 10, 10, ruleset);
 	largeGrid.cells[0][0][0].setState(ALIVE);
@@ -123,6 +129,7 @@ TEST(GridTest, NeighbourCount2) {
 
 }
 
+// Test the update function of the grid, esnuring that the lifespan is decremented
 TEST(GridTest, LifeSpanTest) {
 	Grid<Cell> largeGrid(10, 10, 10, ruleset);
 	largeGrid.cells[0][0][0].setState(ALIVE);

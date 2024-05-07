@@ -3,6 +3,7 @@
 #include "RPSCell.h"
 
 
+// Create getters and setters for the RPSCell class
 RPSState RPSCell::getState() {
     return currentState;
 }
@@ -29,6 +30,7 @@ glm::vec3 RPSCell::getColor() {
     return color;
 }
 
+// Update the cell based on the winner of the RPS game
 void RPSCell::updateCell(RPSState winner) {
 
     if (currentState == ROCK) {
@@ -51,6 +53,7 @@ void RPSCell::updateCell(RPSState winner) {
     }
 }
 
+// Allow a cell's members to be copied into this cell
 void RPSCell::copy(RPSCell cell) {
     this->currentState = cell.currentState;
     this->color = cell.color;

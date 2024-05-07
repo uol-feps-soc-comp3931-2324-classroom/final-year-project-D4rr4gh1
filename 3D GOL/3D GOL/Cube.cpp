@@ -6,7 +6,7 @@
 
 #include "Cube.h"
 
-
+// Set up the cube VAO and VBO
 void setupCubeVAO() {
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);

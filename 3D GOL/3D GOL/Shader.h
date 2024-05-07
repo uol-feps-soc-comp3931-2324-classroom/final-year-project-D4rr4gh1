@@ -1,6 +1,8 @@
 #ifndef SHADER_H
 #define SHADER_H
 
+
+// Define the vertex and fragment shader source code
 const char* vertexShaderSource = R"glsl(
 #version 330 core
 layout (location = 0) in vec3 aPos;

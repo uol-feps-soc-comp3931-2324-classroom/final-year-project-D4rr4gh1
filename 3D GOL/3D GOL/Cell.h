@@ -3,8 +3,12 @@
 #include <glm/glm.hpp>
 #include "Global.h"
 
+
+// Define the State enum
 enum State { DEAD, ALIVE };
 
+
+// Define the Cell class
 class Cell {
 
 private:

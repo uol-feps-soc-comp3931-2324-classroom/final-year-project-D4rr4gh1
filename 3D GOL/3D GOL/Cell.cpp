@@ -4,6 +4,8 @@
 #include "Global.h"
 
 
+
+// Create getters and setters for the Cell class
 State Cell::getState() {
     return this->currentState;
 }

@@ -6,6 +6,8 @@
 #include "RPSCell.h"
 #include "Ruleset.h"
 
+
+// Define the Grid class, using a generic template
 template <class T>
 class Grid {
 

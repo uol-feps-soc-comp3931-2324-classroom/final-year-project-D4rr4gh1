@@ -3,15 +3,22 @@
 
 #include <glm/glm.hpp>
 
+
+// Define the Camera class
 class Camera {
 public:
+    // Vectors for camera position, orientation, and movement
     glm::vec3 Position;
     glm::vec3 Front;
     glm::vec3 Up;
     glm::vec3 Right;
     glm::vec3 WorldUp;
+
+    // Euler Angles
     float Yaw;
     float Pitch;
+
+    // Extra camera details
     float MovementSpeed;
     float MouseSensitivity;
     float fov;

@@ -4,6 +4,8 @@
 #include <vector>
 #include "Cell.h"
 
+
+// Define the Ruleset class
 class Ruleset {
 
 private:

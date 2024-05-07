@@ -2,8 +2,10 @@
 #define RPSCELL_H
 
 
+// Define the RPSState enum
 enum RPSState { ROCK, PAPER, SCISSORS };
 
+// Define the RPSCell class
 class RPSCell {
 
 private:
