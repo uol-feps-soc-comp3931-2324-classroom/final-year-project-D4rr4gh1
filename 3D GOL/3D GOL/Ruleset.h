@@ -1,6 +1,7 @@
 #ifndef RULESET_H
 #define RULESET_H
 
+#include <stdexcept>
 #include <vector>
 #include "Cell.h"
 

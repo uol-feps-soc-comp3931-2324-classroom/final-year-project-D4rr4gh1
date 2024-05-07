@@ -20,15 +20,15 @@
 
 
 // Game Variables
-int generalORrps = 1; // 1 for Chosen Ruleset, 2 for Rock-Paper-Scissors
+int generalORrps = 2; // 1 for Chosen Ruleset, 2 for Rock-Paper-Scissors
 int defaultLifeSpan = 5; // Lifespan of a cell
 int initialCellChance = 10; // Initial chance of a cell being alive
 std::vector<int> survivalNeighbours = { 4 }; // Defined number of neighbours for a cell to survive, input each number of desire neighbours into the vector
 std::vector<int> birthNeighbours = { 4 }; // Defined number of neighbours for a cell to be born, input each number of desire neighbours into the vector
 
 // RPS Variables
-int RPSWinThreshold = 10; // Number of wins needed by winning counter part to turn the cell
-int RPSRandomness = 5; // Randomness of the game, the higher the number, the more random the game
+int RPSWinThreshold = 7; // Number of wins needed by winning counter part to turn the cell
+int RPSRandomness = 7; // Randomness of the game, the higher the number, the more random the game
 
 
 // Global Variables for easy access throught the program
