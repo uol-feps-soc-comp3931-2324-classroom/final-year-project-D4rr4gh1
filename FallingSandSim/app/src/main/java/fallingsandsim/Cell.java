@@ -1,29 +1,15 @@
 package fallingsandsim;
 
+// This enum represents the possible states of a cell
 enum State {SAND, WATER, STONE, EMPTY};
-enum Direction {LEFT, RIGHT, NONE};
 
+// This class represents a cell in the simulation
 public class Cell {
     State state;
-    float momentum;
-    Direction direction;
 
-
+    // Constructor
     public Cell(State state)
     {
         this.state = state;
-        this.momentum = 1;
-        this.direction = Direction.NONE;
     }
-
-    public void updateMomentum(float updatedValue)
-    {
-        this.momentum = updatedValue;
-    }
-
-    public void updateDirection(Direction direction)
-    {
-        this.direction = direction;
-    }
-
 }

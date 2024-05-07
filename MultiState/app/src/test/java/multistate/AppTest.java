@@ -5,12 +5,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class AppTest {
 
+
+    // Test that the cell constructor works
     @Test void cellConstructorWorks() {
         Cell testCell = new Cell(1, 2);
         assertEquals(testCell.state, 1);
         assertEquals(testCell.lifespan, 2);
     }
 
+    // Test that RPS rules correctly identify the number of losses
     @Test void rpsCorrectlyIdentifiesNumberOfLosses() {
         Cell rock = new Cell(0);
         Cell paper = new Cell(1);
@@ -35,6 +38,9 @@ class AppTest {
     }
 
 
+
+    // Test that RPS rules correctly identify the number of losses
+    // and the new grid is being correctly generated
     @Test void playRPSWorks() {
         Cell rock = new Cell(0);
         Cell paper = new Cell(1);
@@ -62,7 +68,6 @@ class AppTest {
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                System.out.println("Test state is: " + testPopulation.getCell(i, j).state + " Should be: " + result[i][j].state);
                 assertEquals(testPopulation.getCell(i, j).state, result[i][j].state);
             }
 

@@ -10,10 +10,12 @@ import java.awt.*;
 
 public class App {
 
+    // Define our class members
     private static Population p;
 
     public static void main(String[] args) {
 
+        // Create a new population with the given width and height
         p = new Population(600, 400);
 
         // Create our GUI for the application
@@ -21,6 +23,7 @@ public class App {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(p.width, p.height);
 
+        // Create our buttons for the different states
         JButton waterButton = new JButton("Water");
         JButton sandButton = new JButton("Sand");
         JButton stoneButton = new JButton("Stone");
@@ -28,6 +31,8 @@ public class App {
         gamePanel panel = new gamePanel();
         panel.setLayout(new BorderLayout());
 
+
+        // Add action listeners to the buttons so that we can change the draw state
         waterButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -49,6 +54,7 @@ public class App {
             }
         });
 
+        // Create a panel for the buttons and add them to it
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
         buttonPanel.add(waterButton);
@@ -61,6 +67,7 @@ public class App {
 
         frame.pack();
         frame.setVisible(true);
+
         // Set up our timer for repeatedly running the evolution function
         Timer timer = new Timer();
 
@@ -92,6 +99,7 @@ public class App {
             setPreferredSize(new Dimension(p.width, p.height));
             setBackground(Color.BLACK);
 
+            // Create a timer to handle the mouse being held down
             timer = new javax.swing.Timer(100, new java.awt.event.ActionListener() {
                 @Override
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -99,7 +107,8 @@ public class App {
                 }
             });
 
-
+            // Add mouse listeners to the panel, so that the user can 
+            // interact with the simulation
             addMouseListener(new java.awt.event.MouseAdapter() {
                 @Override
                 public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -127,20 +136,23 @@ public class App {
             });
         }
 
+        // This function is used to handle the mouse being clicked or dragged
         public void handleMouse(int x, int y){
             if(p.getCell(x, y).state == State.EMPTY){
                 p.setCell(x, y, new Cell(drawState));
             }
         }
 
+        // This function is used to set the draw state of the panel
         public void setDrawState(State state){
             drawState = state;
         }
-    
+        
+
+        // This function is used to paint the panel, it will draw the cells
         @Override
         public void paint(Graphics g){
             super.paint(g);
-            int color;
 
             for (int x = 0; x < p.width; x++) {
                 for (int y = 0; y < p.height; y++) {

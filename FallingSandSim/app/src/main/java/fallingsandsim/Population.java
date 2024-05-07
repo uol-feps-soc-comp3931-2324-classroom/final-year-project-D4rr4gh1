@@ -95,16 +95,21 @@ public class Population {
         return nextPop;
     }
 
-
+    // This function will be used to update the position of a sand particle
     private int[] updateSand(int x, int y){
 
+        // If the cell below is empty, move the sand down
         if (cells[x][y + 1].state == State.EMPTY){
             return new int[]{x, y + 1};
         }
+        
 
+        // If the cell below is not empty, check if we can move left or right
         boolean canMoveLeft = (x - 1 >= 0) && (cells[x - 1][y + 1].state == State.EMPTY);
         boolean canMoveRight = (x + 1 < width) && (cells[x + 1][y + 1].state == State.EMPTY);
 
+        // If we can move left and right, choose randomly
+        // else move in the direction we can
         if (canMoveLeft && canMoveRight){
             return new int[]{(Math.random() < 0.5 ? x - 1 : x + 1), y + 1};
         }
@@ -117,37 +122,28 @@ public class Population {
             return new int[]{x + 1, y + 1};
         }
 
+        // Return the new coordinates of the cell
         return new int[]{x, y};
     }
 
-    
+    // This function will be used to disperse water
     private int[] disperseWater(int x, int y, Cell currentCell){
 
-        // if (currentCell.momentum < 0.1){
-        //     return new int[]{x, y};
-        // }
-
+        // If the cell below is empty, move the water down
         if (cells[x][y + 1].state == State.EMPTY){
-            //currentCell.updateMomentum(currentCell.momentum * 1.05f);
             return new int[]{x, y + 1};
         }
 
-        // if(cells[x][y + 1].state == State.STONE){
-        //     currentCell.updateMomentum(0.f);
-        // }
-
-
+        // If the cell below is not empty, check if we can move left or right
         boolean canMoveLeft = (x - 1 >= 0) && (cells[x - 1][y].state == State.EMPTY);
         boolean canMoveRight = (x + 1 < width) && (cells[x + 1][y].state == State.EMPTY);
 
+        // If we can move left and right, move left or right
         if (canMoveLeft || canMoveRight){
-            // if(currentCell.direction == Direction.NONE || Math.random() < 0.3){
-            //     currentCell.updateDirection(Math.random() < 0.5 ? Direction.LEFT : Direction.RIGHT);
-            // }
             return new int[]{(canMoveLeft ? x - 1 : (canMoveRight ? x + 1 : x)), y};
         }
 
-        //
+        // Return the new coordinates of the cell
         return new int[]{x, y};
 
     }   

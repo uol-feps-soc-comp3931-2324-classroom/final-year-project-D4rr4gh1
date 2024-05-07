@@ -4,17 +4,20 @@ public class RPSRules {
 
     private int threshold, randomFactor;
 
+    // Constructor for the RPSRules class, setting the class members
     public RPSRules(int threshold, int randomFactor)
     {
         this.threshold = threshold;
         this.randomFactor = randomFactor;
     }
     
+    // This function evolves the population by one generation
     public Population evolve(Population currentPop)
     {
         Population nextPop = new Population(currentPop);
 
-        // Work through the new grid, applying the Conway rules to each of our cells.
+        // Work through the new grid, applying the RPS rules to each cell and 
+        // updating the new grid accordingly
         for (int i = 0; i < nextPop.width; i++) {
             for (int j = 0; j < nextPop.height; j++) {
                 Cell curCell = currentPop.getCell(i, j);
@@ -27,17 +30,12 @@ public class RPSRules {
         return nextPop;
     }
 
+    // This function applies the rules of the RPSLSp game to a cell
     private Cell applyRules(Cell cell, int[] RPSScore)
     {   
         int randomness = (int) (Math.random() * randomFactor);
         int cellState = cell.state;
-
-        //RPS Cell updating
-        // if(RPSScore[1] > threshold + randomness){
-        //     cell.state = (cell.state + 1) % 3;
-        // }
-        
-
+       
         // RPSLSp Cell Updating
         if(RPSScore[1] > threshold + randomness){
             switch(cellState)

@@ -36,7 +36,7 @@ public class Population {
 
     private void initialisePopulation(int setting){
 
-        // This Grid is completely randomised
+        // This Grid is completely randomised, for RPSLSp
         if(setting == 0){
             for(int i = 0; i < width; i++) {
                 for(int j = 0; j < height; j++) {         
@@ -64,6 +64,7 @@ public class Population {
             }
         }
 
+        // This Grid is completely randomised, for RPS
         if(setting == 2){
             for(int i = 0; i < width; i++) {
                 for(int j = 0; j < height; j++) {
@@ -100,7 +101,7 @@ public class Population {
             for(int j = -1; j <= 1; j++){
                 if(i == 0 && j == 0) continue;
                 if(x + i < 0 || x + i >= width || y + j < 0 || y + j >= height) continue;
-
+                
                 int col = (x + i);
                 int row = (y + j);
 

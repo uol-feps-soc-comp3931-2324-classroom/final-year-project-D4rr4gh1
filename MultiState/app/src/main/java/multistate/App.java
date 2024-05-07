@@ -7,13 +7,19 @@ import java.awt.*;
 
 public class App {
 
+
+    // Create an iniitial population
     private static Population p;
 
     public static void main(String[] args) {
 
+
+        // Check for the correct number of arguments
         if(args.length != 3)
             throw new IllegalArgumentException("Not enough arguments. Correct Usage is: ./gradlew run --args='<Threshold> <Randomness Factor> <Initial Grid>'");
         
+        // Create our ruleset and population, based on the arguments given
+        // catching any errors that may occur
         RPSRules rules;
         try{
             rules = new RPSRules(Integer.valueOf(args[0]), Integer.valueOf(args[1]));
@@ -61,7 +67,9 @@ public class App {
             setPreferredSize(new Dimension(p.width, p.height));
             setBackground(Color.BLACK);
         }
-    
+        
+
+        // This function is called whenever the panel needs to be redrawn
         @Override
         public void paint(Graphics g){
             super.paint(g);
